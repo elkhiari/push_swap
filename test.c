@@ -9,6 +9,14 @@ struct Node
     struct Node *next;
 };
 
+struct Node *createNode(int data)
+{
+    struct Node *newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = data;
+    newNode->next = NULL;
+    return newNode;
+}
+
 void ft_print_linked(struct Node *head)
 {
     struct Node *current = head;
@@ -81,6 +89,30 @@ int check_args(char **av)
     return 0;
 }
 
+struct Node *ra(struct Node *head)
+{
+    int data = head->data;
+    struct Node *current = head;
+
+    while (current->next)
+    {
+        current = current->next;
+    }
+    head->data = current->data;
+    current->data = data;
+    printf("ra\n");
+    return head;
+}
+
+struct Node *sa(struct Node *head)
+{
+    int data = head->data;
+    head->data = head->next->data;
+    head->next->data = data;
+    printf("sa\n");
+    return head;
+}
+
 int main(int ac, char **av)
 {
     if (ac < 2)
@@ -88,8 +120,9 @@ int main(int ac, char **av)
         printf("Error: Wrong number of arguments\n");
         return 1;
     }
-    struct Node *head;
-    head = (struct Node*)malloc(sizeof(struct Node));
+    struct Node *head = (struct Node*)malloc(sizeof(struct Node));
+
+    
 
     if (check_args(av))
     {
@@ -105,9 +138,15 @@ int main(int ac, char **av)
         av++;
     }
 
-    ft_print_linked(head);
+    // ft_print_linked(head);
+    // printf("------------------------\n");
+    head = sa(head);
+    // ft_print_linked(head);
+    // printf("------------------------\n");
+    head = ra(head);
+    head = ra(head);
+    // ft_print_linked(head);
     
-    printf("------------------------\n");
  
    
     return 0;
